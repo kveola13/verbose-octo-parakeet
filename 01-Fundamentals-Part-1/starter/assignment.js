@@ -4,7 +4,6 @@ let population = 5.4;
 const isIsland = false;
 let language = "Norwegian";
 let description = `${country} is in ${continent} and its ${population} million people speak ${language}`;
-let numberOfNeighbors = 3;
 let countryMeetsCriteria =
   language.toLowerCase() === "english" && population < 50 && !isIsland;
 
@@ -23,7 +22,10 @@ console.log(
     5 + 6 + "4" + 9 - 4 - 2
   }`
 );
-if (numberOfNeighbors == 1) {
+let numberOfNeighbors = Number(
+  prompt("How many neighboring countries does your country have?")
+);
+if (numberOfNeighbors === 1) {
   console.log("Only one border.");
 } else if (numberOfNeighbors > 1) {
   console.log("More than one border.");
@@ -37,8 +39,6 @@ if (countryMeetsCriteria) {
 }
 switch (language.toLowerCase()) {
   case "chinese":
-    console.log("Number 1 language in the world");
-    break;
   case "mandarin":
     console.log("Number 1 language in the world");
     break;
@@ -56,7 +56,6 @@ switch (language.toLowerCase()) {
     break;
   default:
     console.log("Language is not in the top 5");
-    break;
 }
 console.log(
   `${country}'s population is ${population > 33 ? "above" : "below"} average`
