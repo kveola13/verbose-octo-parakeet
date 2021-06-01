@@ -1,5 +1,15 @@
 "use strict";
 
+const days = [
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+  "sunday",
+];
+
 // Data needed for a later exercise
 const flights =
   "_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30";
@@ -27,15 +37,15 @@ const restaurant = {
     console.log(otherIngredients);
   },
   openingHours: {
-    thu: {
+    [days[3]]: {
       open: 12,
       close: 22,
     },
-    fri: {
+    [days[4]]: {
       open: 11,
       close: 23,
     },
-    sat: {
+    [days[5]]: {
       open: 0, // Open 24 hours
       close: 24,
     },
@@ -98,7 +108,7 @@ const obj = { v: 23, n: 7, c: 14 };
 console.log(v, n);
 
 const {
-  fri: { open: op, close: cl },
+  [days[4]]: { open: op, close: cl },
 } = openingHours;
 console.log(op, cl);
 
@@ -197,6 +207,49 @@ if (restaurant.orderPizza) {
 }
 restaurant.orderPizza && restaurant.orderPizza("Mushrooms", "Spinach");
 
+const newNewMenu = [...restaurantCopy.starterMenu, ...restaurantCopy.mainMenu];
+
+for (const item of newNewMenu) {
+  console.log(item);
+}
+
+for (const [index, element] of newNewMenu.entries()) {
+  console.log(`${index + 1}: ${element}`);
+}
+
+if (restaurantCopy.openingHours && restaurantCopy.openingHours.monday) {
+  console.log(restaurantCopy.openingHours.monday.open);
+}
+
+//Gives error
+//console.log(restaurantCopy.openingHours.monday.open);
+//does not give error
+console.log(restaurantCopy.openingHours?.monday?.open);
+
+for (const day of days) {
+  const openingHour = restaurantCopy.openingHours[day]?.open ?? "closed";
+  console.log(`On ${day} we open at ${openingHour}`);
+}
+
+console.log(restaurantCopy.order?.(0, 1) ?? "Method does not exist");
+console.log(restaurantCopy.orderRisotto?.(0, 1) ?? "Method does not exist");
+
+const properties = Object.keys(openingHours)
+console.log(properties);
+let openStr = `We are open on ${properties.length} days: ` 
+for (const day of Object.keys(openingHours)) {
+  openStr += `${day}, `
+}
+console.log(openStr);
+
+const tryNewOrders = ["Pasta", "Pizza", "Pizza", "Risotto", "Pasta", "Pizza"]
+const ordersSet = new Set(["Pasta", "Pizza", "Pizza", "Risotto", "Pasta", "Pizza"])
+
+console.log(ordersSet);
+ordersSet.add("Garlic bread");
+ordersSet.delete("Garlic bread");
+const ordersUnique = [...new Set(tryNewOrders)];
+console.log(ordersUnique);
 //Null coalecing operator
 // Not yet introduced in ECMASCRIPT, but stage 3
 //const correctGuests = restaurant.numberOfGuests ?? 10;
