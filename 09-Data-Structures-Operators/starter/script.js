@@ -234,16 +234,23 @@ for (const day of days) {
 console.log(restaurantCopy.order?.(0, 1) ?? "Method does not exist");
 console.log(restaurantCopy.orderRisotto?.(0, 1) ?? "Method does not exist");
 
-const properties = Object.keys(openingHours)
+const properties = Object.keys(openingHours);
 console.log(properties);
-let openStr = `We are open on ${properties.length} days: ` 
+let openStr = `We are open on ${properties.length} days: `;
 for (const day of Object.keys(openingHours)) {
-  openStr += `${day}, `
+  openStr += `${day}, `;
 }
 console.log(openStr);
 
-const tryNewOrders = ["Pasta", "Pizza", "Pizza", "Risotto", "Pasta", "Pizza"]
-const ordersSet = new Set(["Pasta", "Pizza", "Pizza", "Risotto", "Pasta", "Pizza"])
+const tryNewOrders = ["Pasta", "Pizza", "Pizza", "Risotto", "Pasta", "Pizza"];
+const ordersSet = new Set([
+  "Pasta",
+  "Pizza",
+  "Pizza",
+  "Risotto",
+  "Pasta",
+  "Pizza",
+]);
 
 console.log(ordersSet);
 ordersSet.add("Garlic bread");
@@ -254,3 +261,91 @@ console.log(ordersUnique);
 // Not yet introduced in ECMASCRIPT, but stage 3
 //const correctGuests = restaurant.numberOfGuests ?? 10;
 //console.log(correctGuests);
+
+const restaurantMap = new Map();
+restaurantMap.set("name", "Classico Italiano");
+restaurantMap.set(1, "Firenze, Italy");
+restaurantMap.set(2, "Lisbon, Portugal");
+
+console.log(restaurantMap.set(3, "Paris, France"));
+restaurantMap
+  .set("categories", ["Italian", "Pizzeria", "Vegetarian", "Organic"])
+  .set("open", 11)
+  .set("close", 23)
+  .set(true, "We are open")
+  .set(false, "We are closed");
+
+console.log(restaurantMap.get("name"));
+console.log(restaurantMap.get(true));
+console.log(restaurantMap.get(1));
+const time = 8;
+
+restaurantMap.get(
+  time > restaurantMap.get("open") && time < restaurantMap.get("close")
+);
+
+console.log(restaurantMap.has("categories"));
+restaurantMap.delete(2);
+restaurantMap.set([1, 2], "Test");
+restaurantMap.set(document.querySelector("h1"), "Heading");
+console.log(restaurantMap);
+console.log(restaurantMap.size);
+restaurantMap.clear();
+
+console.log(restaurantMap.get([1, 2]));
+
+const question = new Map([
+  ["question", "What is the best programming language in the world"],
+  [1, "C"],
+  [2, "Java"],
+  [3, "Javascript"],
+  ["correct", 2],
+  [true, "Correct answer"],
+  [false, "Wrong answer"],
+]);
+console.log(question);
+console.log(Object.entries(openingHours));
+const hoursMap = new Map(Object.entries(openingHours));
+console.log(hoursMap);
+
+console.log(question.get("question"));
+for (const [key, value] of question) {
+  if (typeof key === "number") console.log(`Answer ${key} : ${value}`);
+}
+const answer = Number(prompt("Your answer:\n"));
+console.log(question.get(answer === question.get("correct")));
+
+console.log([...question]);
+console.log([...question.keys()]);
+console.log([...question.values()]);
+
+const airline = "TAP Air Portugal";
+const plane = "A320";
+
+console.log(plane[0]);
+console.log(plane[1]);
+console.log(plane[2]);
+console.log("B737"[0]);
+console.log(airline.length);
+console.log("B737".length);
+
+console.log(airline.indexOf("r"));
+console.log(airline.lastIndexOf("r"));
+console.log(airline.indexOf("portugal"));
+
+console.log(airline.slice(4));
+console.log(airline.slice(4, 7));
+
+console.log(airline.slice(0, airline.indexOf(" ")));
+console.log(airline.slice(airline.lastIndexOf(" ") + 1));
+
+console.log(airline.slice(-2));
+console.log(airline.slice(1, -1));
+
+const checkMiddleSeat = function (seat) {
+  return seat.slice(-1) === "B" || seat.slice(-1) === "E";
+};
+
+console.log(checkMiddleSeat("11B"));
+console.log(checkMiddleSeat("23C"));
+console.log(checkMiddleSeat("3E"));
