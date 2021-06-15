@@ -426,3 +426,24 @@ const days1 = calculateDaysPassed(
   new Date(2037, 3, 4)
 );
 console.log(days1);
+
+const someNumber = 281381238.23;
+const someOptions = {
+  style: "unit",
+  unit: "mile-per-hour",
+  currency: "EUR",
+  useGrouping: true,
+};
+
+console.log(
+  "US: ",
+  new Intl.NumberFormat("en-US", someOptions).format(someNumber)
+);
+console.log(
+  "Germany: ",
+  new Intl.NumberFormat("de-DE", someOptions).format(someNumber)
+);
+console.log(
+  "Norway: ",
+  new Intl.NumberFormat("no-NO", someOptions).format(someNumber)
+);
