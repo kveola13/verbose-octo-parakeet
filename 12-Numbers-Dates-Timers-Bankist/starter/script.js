@@ -194,14 +194,33 @@ const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
+const startLogOutTimer = function () {
+  const tick = function () {
+    const minutes = String(Math.trunc(timer / 60)).padStart(2, 0);
+    const seconds = String(timer % 60).padStart(2, 0);
+    labelTimer.textContent = `${minutes}:${seconds}`;
+
+    if (timer === 0) {
+      clearInterval(startLogOutTimer);
+      labelWelcome.textContent = `Log in to get starded`;
+      containerApp.style.opacity = 0;
+    }
+    timer--;
+  };
+  let timer = 30;
+  tick();
+  const ticker = setInterval(tick, 1000);
+  return ticker;
+};
+
 ///////////////////////////////////////
 // Event handlers
-let currentAccount;
+let currentAccount, ticker;
 
-currentAccount = account1;
+/* currentAccount = account1;
 updateUI(account1);
 containerApp.style.opacity = 100;
-labelWelcome.textContent = `Welcome back, Ola`;
+labelWelcome.textContent = `Welcome back, Ola`; */
 
 btnLogin.addEventListener("click", function (e) {
   // Prevent form from submitting
@@ -244,6 +263,8 @@ btnLogin.addEventListener("click", function (e) {
     inputLoginUsername.value = inputLoginPin.value = "";
     inputLoginPin.blur();
 
+    if (ticker) clearInterval(ticker);
+    ticker = startLogOutTimer();
     // Update UI
     updateUI(currentAccount);
   }
@@ -269,6 +290,9 @@ btnTransfer.addEventListener("click", function (e) {
     currentAccount.movementsDates.push(new Date().toISOString());
     // Update UI
     updateUI(currentAccount);
+
+    clearInterval(ticker);
+    ticker = startLogOutTimer();
   }
 });
 
@@ -281,11 +305,15 @@ btnLoan.addEventListener("click", function (e) {
     amount > 0 &&
     currentAccount.movements.some((mov) => mov >= amount * 0.1)
   ) {
-    // Add movement
-    currentAccount.movements.push(amount);
-    currentAccount.movementsDates.push(new Date().toISOString());
-    // Update UI
-    updateUI(currentAccount);
+    setTimeout(function () {
+      // Add movement
+      currentAccount.movements.push(amount);
+      currentAccount.movementsDates.push(new Date().toISOString());
+      // Update UI
+      updateUI(currentAccount);
+      clearInterval(ticker);
+      ticker = startLogOutTimer();
+    }, 2500);
   }
   inputLoanAmount.value = "";
 });
@@ -470,3 +498,19 @@ console.log(
   "Norway: ",
   new Intl.NumberFormat("no-NO", someOptions).format(someNumber)
 );
+
+const ingredients = ["pepperoni", "cheese"];
+const pizzaTimer = setTimeout(
+  (ingredient1, ingredient2) =>
+    console.log(`Here is your pizza with ${ingredient1} and ${ingredient2}`),
+  3000,
+  ...ingredients
+);
+console.log("Waiting for pizza...");
+
+if (ingredients.includes("pepperoni")) clearTimeout(pizzaTimer);
+
+/* setInterval(function () {
+  const now = new Date();
+  console.log(now);
+}, 3000); */
