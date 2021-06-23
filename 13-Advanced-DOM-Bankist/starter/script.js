@@ -33,4 +33,36 @@ document.addEventListener("keydown", function (e) {
 console.log(document.documentElement);
 console.log(document.head);
 console.log(document.body);
-document.querySelector(".header");
+const header = document.querySelector(".header");
+const allSections = document.querySelector(".section");
+console.log(allSections);
+document.getElementById("section--1");
+const allButtons = document.getElementsByTagName("button");
+console.log(allButtons);
+
+document.getElementsByClassName("btn");
+
+const message = document.createElement("div");
+message.classList.add("cookie-message");
+message.innerHTML =
+  'We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie">Got it!</button>';
+header.append(message);
+document
+  .querySelector(".btn--close-cookie")
+  .addEventListener("click", function () {
+    message.parentElement.removeChild(message);
+  });
+
+message.style.backgroundColor = "#37383d";
+message.style.width = "120%";
+console.log(message.style.height);
+console.log(message.style.backgroundColor);
+console.log(message.style.color);
+console.log(getComputedStyle(message).height);
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height, 10) + 30 + "px";
+
+document.documentElement.style.setProperty("--color-primary", "orangered");
+
+const logo = document.querySelector(".nav__logo");
+console.log(logo.src);
