@@ -66,3 +66,17 @@ document.documentElement.style.setProperty("--color-primary", "orangered");
 
 const logo = document.querySelector(".nav__logo");
 console.log(logo.src);
+console.log(logo.alt);
+console.log(logo.className);
+console.log(logo.getAttribute("designer"));
+
+logo.alt = "Beatiful minimalist logo";
+
+logo.setAttribute("company", "Bankist");
+console.log(logo);
+
+console.log(logo.getAttribute("src"));
+
+const link = document.querySelector(".nav__link--btn");
+console.log(link.href);
+console.log(link.getAttribute("href"));
