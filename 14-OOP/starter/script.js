@@ -18,3 +18,32 @@ Person.prototype.calcAge = function () {
 };
 
 ola.calcAge();
+
+const PersonCl = class {};
+
+class PersonClass {
+  constructor(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  }
+  calcAge() {
+    console.log(2021 - this.birthYear);
+  }
+  greet() {
+    console.log(`Hey ${this.firstName}`);
+  }
+}
+
+const morty = new PersonClass("Morty", 1997);
+morty.calcAge();
+morty.greet();
+
+const account = {
+  owner: "Ola",
+  movements: [200, 530, 120, 300],
+  get latest() {
+    return this.movements.slice(-1).pop();
+  },
+};
+
+console.log(account.latest);
