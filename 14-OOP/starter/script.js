@@ -72,3 +72,18 @@ const rick = Object.create(PersonProto);
 rick.name = "Rick";
 rick.birthYear = "1936";
 rick.calcAge();
+
+const Student = function (firstName, birthYear, course) {
+  Person.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+Student.prototype = Object.create(Person.prototype);
+
+Student.prototype.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+
+const jerry = new Student("Jerry", 2020, "Computer Science");
+console.log(jerry);
+jerry.introduce();
