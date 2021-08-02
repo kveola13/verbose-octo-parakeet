@@ -18,12 +18,23 @@ class App {
   #mapEvent;
   constructor() {
     this._getPosition();
+    form.addEventListener("submit", this._newWorkout);
+
+    inputType.addEventListener("change", function (event) {
+      inputElevation
+        .closest(".form__row")
+        .classList.toggle("form__row--hidden");
+      inputCadence.closest(".form__row").classList.toggle("form__row--hidden");
+    });
   }
   _getPosition() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this._loadMap(), function () {
-        console.log("Could not get user's location");
-      });
+      navigator.geolocation.getCurrentPosition(
+        this._loadMap.bind(this),
+        function () {
+          console.log("Could not get user's location");
+        }
+      );
     }
   }
   _loadMap(position) {
@@ -46,35 +57,28 @@ class App {
   }
   _showForm() {}
   _toggleElevationField() {}
-  _newWorkout() {}
+  _newWorkout(event) {
+    event.preventDefault();
+    inputDistance.value =
+      inputDuration.value =
+      inputCadence.value =
+      inputElevation.value =
+        "";
+    const { lat, lng } = mapEvent.latlng;
+    L.marker([lat, lng])
+      .addTo(this.#map)
+      .bindPopup(
+        L.popup({
+          maxWidth: 250,
+          minWidth: 100,
+          autoClose: false,
+          closeOnClick: false,
+          className: "running-popup",
+        })
+      )
+      .setPopupContent("Workout")
+      .openPopup();
+  }
 }
 
 const app = new App();
-
-form.addEventListener("click", function (event) {
-  event.preventDefault();
-  inputDistance.value =
-    inputDuration.value =
-    inputCadence.value =
-    inputElevation.value =
-      "";
-  const { lat, lng } = mapEvent.latlng;
-  L.marker([lat, lng])
-    .addTo(map)
-    .bindPopup(
-      L.popup({
-        maxWidth: 250,
-        minWidth: 100,
-        autoClose: false,
-        closeOnClick: false,
-        className: "running-popup",
-      })
-    )
-    .setPopupContent("Workout")
-    .openPopup();
-});
-
-inputType.addEventListener("change", function (event) {
-  inputElevation.closest(".form__row").classList.toggle("form__row--hidden");
-  inputCadence.closest(".form__row").classList.toggle("form__row--hidden");
-});
