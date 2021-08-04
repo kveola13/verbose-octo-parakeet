@@ -101,3 +101,32 @@ const getCountryDataNew = function (country) {
 btn.addEventListener("click", function () {
   getCountryDataNew("Australia");
 });
+
+console.log("Test start");
+setTimeout(() => console.log("0 sec timer"), 0);
+Promise.resolve("Resolved promise 1").then((response) => console.log(response));
+Promise.resolve("Resolved promise 2").then((response) => {
+  for (let index = 0; index < 10; index++) {}
+  console.log(response);
+});
+console.log("Test end");
+
+const lotteryPromise = new Promise(function (resolve, reject) {
+  setTimeout(function () {
+    if (Math.random() >= 0.5) {
+      resolve("You win!");
+    } else {
+      reject(new Error("You lose.."));
+    }
+  }, 2000);
+});
+
+lotteryPromise
+  .then((result) => console.info(result))
+  .catch((error) => console.error(error));
+
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
