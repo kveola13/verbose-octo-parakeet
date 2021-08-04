@@ -62,10 +62,29 @@ const renderCountry = function (data, className = "") {
           </article>`;
   countriesContainer.insertAdjacentHTML("beforeend", html);
 };
-getCountryAndNeighborData("Norway");
+//getCountryAndNeighborData("Norway");
 
-const getCountryDataNew = function () {
-  const request = fetch("https://restcountries.eu/rest/v2/name/norway");
-  console.log(request);
+const renderError = function (message) {
+  countriesContainer.insertAdjacentText("beforeend", message);
+  //countriesContainer.style.opacity = 1;
 };
-getCountryDataNew();
+
+const getCountryDataNew = function (country) {
+  fetch(`https://restcountries.eu/rest/v2/name/${country}`)
+    .then((response) => response.json())
+    .then((data) => {
+      renderCountry(data[0]);
+      const neighbor = data[0].borders[0];
+      if (!neighbor) return;
+      return fetch(`https://restcountries.eu/rest/v2/alpha/${neighbor}`)
+        .then((response) => response.json())
+        .then((data) => renderCountry(data, "neighbour"))
+        .catch(renderError("Something went wrong"))
+        .finally(() => {
+          countriesContainer.style.opacity = 1;
+        });
+    });
+};
+btn.addEventListener("click", function () {
+  getCountryDataNew("norway");
+});
